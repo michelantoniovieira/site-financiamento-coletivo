@@ -89,6 +89,9 @@
 
 /* Estilos para a seção principal */
 .main-section {
+    display: flex;
+    flex-direction: row; /* Coloca os elementos em uma linha (horizontalmente) */
+    align-items: flex-start; /* Alinha os itens no topo verticalmente */
     padding: 60px;
     background-color: #f7f7f7;
 }
@@ -105,7 +108,9 @@
 .rifa-title {
     font-size: 24px;
     font-weight: bold;
-    margin-bottom: 20px;
+    text-align: left;
+    color: black;
+    background-color: #f7f7f7;
 }
 
 .rifa-description {
@@ -127,10 +132,6 @@
 .prize-rectangle {
     background-color: #fff;
     border: 2px solid #ccc;
-    padding: 20px;
-    margin-top: 20px;
-    text-align: center;
-    flex-basis: 50%; /* Metade do espaço horizontal */
 }
 
 .prize-image img {
@@ -139,11 +140,36 @@
 }
 
 /* Estilos para os retângulos de informações */
-.info-rectangle {
+.info-rectangle-1 {
+    margin-top: 30px;
     background-color: #fff;
     border: 2px solid #ccc;
-    padding: 20px;
-    margin-top: 20px;
     text-align: center;
-    flex-basis: 25%; /* Um quarto do espaço horizontal */
+}
+
+.info-rectangle-2 {
+    margin-top: 30px;
+    background-color: #fff;
+    border: 2px solid #ccc;
+    text-align: center;
+}
+
+.info-rectangle-3 {
+    margin-top: 30px;
+    background-color: #fff;
+    border: 2px solid #ccc;
+    text-align: center;
+}
+
+/* Estilos para a coluna da esquerda (descrição da rifa) */
+.left-column {
+    margin-top: 80px;
+    flex: 1; /* A coluna da esquerda cresce para ocupar todo o espaço disponível */
+    padding-right: 5px; /* Espaçamento à direita para separar as colunas */
+}
+
+/* Estilos para a coluna da direita (prize-section) */
+.right-column {
+    margin-top: 125px;
+    flex: 1; /* A coluna da direita cresce para ocupar todo o espaço disponível */
 }
