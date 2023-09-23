@@ -4,10 +4,15 @@
     color: #fff;
     padding: 10px 0;
     position: fixed;
-    width: 100%;
+    top: 0; /* Alinha o cabeçalho ao topo da página */
+    left: 0; /* Alinha o cabeçalho à esquerda da página */
+    right: 0; /* Alinha o cabeçalho à direita da página */
+    width: 100%; /* Ocupa toda a largura */
     z-index: 1000; /* Para garantir que o cabeçalho fique acima de outros elementos */
     box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.2); /* Sombra suave */
+    text-align: left; /* Alinhe o texto à esquerda dentro do cabeçalho */
 }
+
 
 .navbar {
     display: flex;
@@ -92,17 +97,11 @@
     display: flex;
     flex-direction: row; /* Coloca os elementos em uma linha (horizontalmente) */
     align-items: flex-start; /* Alinha os itens no topo verticalmente */
-    padding: 60px;
+    padding: 30px;
     background-color: #f7f7f7;
-}
-
-.main-content {
-    max-width: 800px;
-    margin: 0 auto;
-    text-align: center;
-    display: flex;
-    flex-direction: row;
-    flex-wrap: wrap;
+    max-width: 50%;
+    border: 2px solid #ccc;
+    margin: 0 auto; /* Centraliza horizontalmente */
 }
 
 .rifa-title {
@@ -132,11 +131,18 @@
 .prize-rectangle {
     background-color: #fff;
     border: 2px solid #ccc;
+    max-width: 90%;
+    display: flex;
+    align-items: center; /* Centraliza verticalmente */
+    justify-content: center; /* Centraliza horizontalmente */
 }
 
 .prize-image img {
     max-width: 100%;
     height: auto;
+    display: flex;
+    align-items: center; /* Centraliza verticalmente */
+    justify-content: center; /* Centraliza horizontalmente */
 }
 
 /* Estilos para os retângulos de informações */
@@ -148,14 +154,14 @@
 }
 
 .info-rectangle-2 {
-    margin-top: 30px;
+    margin-top: 82px;
     background-color: #fff;
     border: 2px solid #ccc;
     text-align: center;
 }
 
 .info-rectangle-3 {
-    margin-top: 30px;
+    margin-top: 82px;
     background-color: #fff;
     border: 2px solid #ccc;
     text-align: center;
@@ -163,13 +169,125 @@
 
 /* Estilos para a coluna da esquerda (descrição da rifa) */
 .left-column {
-    margin-top: 80px;
     flex: 1; /* A coluna da esquerda cresce para ocupar todo o espaço disponível */
-    padding-right: 5px; /* Espaçamento à direita para separar as colunas */
 }
 
 /* Estilos para a coluna da direita (prize-section) */
 .right-column {
-    margin-top: 125px;
     flex: 1; /* A coluna da direita cresce para ocupar todo o espaço disponível */
+}
+
+hr {
+    border: 1px solid #ccc;
+}
+
+.description-column{
+    max-width: 53%;
+    background-color: #f7f7f7;
+    border: 2px solid #ccc;
+    margin: 0 auto; /* Centraliza horizontalmente */
+    padding: 10px;
+    line-height: 1.5; /* Ajusta o espaçamento entre as linhas */
+}
+
+p {
+    margin: 10px; /* Define 10 pixels de espaçamento vertical (superior e inferior) e 0 espaçamento horizontal (esquerda e direita) */
+}
+
+ /* Estilize a matriz de números */
+.number-matrix {
+    display: grid;
+    grid-template-columns: repeat(15, 1fr); /* 15 colunas */
+    gap: 5px; /* Espaço entre os números */
+}
+
+/* Estilos para a matriz de números */
+#numero-matrix {
+    border-collapse: collapse; /* Remove espaçamento entre células */
+    margin: 0 auto; /* Centraliza a tabela horizontalmente */
+}
+
+#numero-matrix td {
+    width: 40px; /* Largura das células */
+    height: 40px; /* Altura das células */
+    border: 1px solid #ccc; /* Borda das células */
+    text-align: center; /* Alinha o texto ao centro das células */
+    vertical-align: middle; /* Alinha o texto verticalmente ao centro */
+    font-size: 16px; /* Tamanho da fonte dos números */
+    background-color: #f7f7f7; /* Cor de fundo das células */
+}
+
+/* Estilos para destacar células quando o mouse passar sobre elas */
+#numero-matrix td:hover {
+    background-color: #ff6600; /* Cor de fundo quando o mouse passar por cima */
+    color: #fff; /* Cor do texto quando o mouse passar por cima */
+    font-weight: bold; /* Texto em negrito quando o mouse passar por cima */
+    cursor: pointer; /* Cursor do mouse muda para uma mãozinha quando o mouse passar por cima */
+}
+
+.rifa-selection{
+    font-size: 24px;
+    font-weight: bold;
+    text-align: left;
+    color: black;
+    padding: 30px;
+    background-color: #f7f7f7;
+    max-width: 50%;
+    border: 2px solid #ccc;
+    margin: 0 auto; /* Centraliza horizontalmente */
+    align-items: center; /* Centraliza verticalmente */
+}
+
+ /* Estilize a tabela conforme desejado */
+table {
+    border-collapse: collapse;
+    width: 100%;
+    border: 2px solid #ccc;
+}
+
+td {
+    border: 1px solid #ccc;
+    padding: 10px;
+    text-align: center;
+}
+
+.centered-title {
+    text-align: center;
+}
+
+/* Estilos para o retângulo pix */
+.pix-rectangle {
+    background-color: #fff;
+    border: 2px solid #ccc;
+    max-width: 50%;
+    text-align: center; /* Centraliza horizontalmente */
+    margin: 0 auto; /* Centraliza horizontalmente */
+}
+
+.pix-image img {
+    height: auto;
+}
+
+/* Estilos para o rodapé */
+.footer {
+    background-color: #1a1a1a; /* Cor de fundo mais escura */
+    color: #fff;
+    padding: 10px 0;
+    bottom: 0; /* Alinha o rodapé na parte inferior da página */
+    left: 0; /* Alinha o rodapé à esquerda da página */
+    right: 0; /* Alinha o rodapé à direita da página */
+    width: 100%; /* Ocupa toda a largura */
+    z-index: 1000; /* Para garantir que o rodapé fique acima de outros elementos */
+    box-shadow: 0px -2px 5px rgba(0, 0, 0, 0.2); /* Sombra suave na parte superior */
+}
+
+/* Estilos para o conteúdo do rodapé */
+.footer-content {
+    text-align: center;
+}
+
+.footer p {
+    margin: 0;
+    font-size: 14px;
+    text-align: center;
 }

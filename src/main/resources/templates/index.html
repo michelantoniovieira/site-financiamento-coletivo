@@ -13,23 +13,39 @@
             <a href="#"><img src="/images/logo.png" alt="Logo"></a>
         </div>
         <div class="menu">
-            <ul>
-                <li><a href="#">Início</a></li>
-                <li><a href="#">Rifas</a></li>
-                <li><a href="#">Contato</a></li>
-            </ul>
         </div>
         <div class="search">
-            <input type="text" placeholder="Buscar">
+            <input type="text" placeholder="Digite o número do celular">
             <button class="text-xs font-medium sm:text-base flex-none border bg-white max-w-max border-Black-100 rounded-lg px-3 py-1"> 🔎 Buscar bilhetes </button>
         </div>
     </nav>
 </header>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<div class="rifa-selection">
+    <p><b>🔎Selecione uma rifa</b></p>
+    <hr>
+    <select>
+        <option value="opcao1">Opção 1</option>
+        <option value="opcao2">Opção 2</option>
+        <option value="opcao3">Opção 3</option>
+    </select>
+</div>
 
-<!-- Conteúdo principal -->
+<br>
+<br>
+<br>
+
 <div class="main-section">
-
     <div class="left-column">
+
         <p class="rifa-title">Descrição da Rifa</p>
 
         <div class="prize-rectangle">
@@ -43,20 +59,77 @@
         <div class="right-column">
             <!-- Três retângulos para informações -->
             <div class="info-rectangle-1">
-                <p>Informação 1</p>
+                <p>Preço da Rifa</p>
             </div>
 
             <div class="info-rectangle-2">
-                <p>Informação 2</p>
+                <p>Sorteio: Loteria Federal</p>
             </div>
 
             <div class="info-rectangle-3">
-                <p>Informação 3</p>
+                <p>Prêmio</p>
             </div>
         </div>
 
-
 </div>
 
+<br>
+<br>
+<br>
+
+<div class="description-column" style="text-align: justify;">
+    <p><b>📕Regulamento / Descrição</b></p>
+    <hr>
+    <p>Sorteio Realizado pela Loteria Federal.</p>
+    <p>Sorteio será realizado quando vender mais de 1300 números, a data será informada via Youtube, Instagram e Grupo de Whatsapp do Mp3playerchannel.</p>
+    <p>O primeiro sorteio do dia será o vencedor. Caso não haja vencedor no primeiro sorteio, iremos para o segundo sorteio, e assim sucessivamente até o quinto sorteio. Caso não haja vencedor, uma nova data será informada.</p>
+    <p>O Primeiro colocado ganha a conta com o ED 500.</p>
+    <p>O maior comprador da Rifa ganha 750 de TC.</p>
+    <p>Entraremos em contato com o vencedor via Whatsapp, e o vencedor tem até 7 dias para enviar o NICK para o envio das TCs. Caso não envie, será sorteado novamente.</p>
+</div>
+
+<h1 class="centered-title">Escolha um número</h1>
+
+<table>
+    <tbody id="numero-matrix">
+    <!-- Os números serão preenchidos dinamicamente aqui usando JavaScript -->
+    </tbody>
+</table>
+
+<script>
+    // Função para criar e preencher a matriz de números
+    function createNumberMatrix() {
+        const numeroMatrix = document.getElementById('numero-matrix');
+        let numero = 1;
+        for (let row = 0; row < 10; row++) {
+            const newRow = document.createElement('tr');
+            for (let col = 0; col < 15; col++) {
+                const newCell = document.createElement('td');
+                newCell.textContent = numero;
+                newRow.appendChild(newCell);
+                numero++;
+            }
+            numeroMatrix.appendChild(newRow);
+        }
+    }
+
+    // Chame a função para gerar a matriz de números quando a página for carregada
+    window.onload = createNumberMatrix;
+</script>
+
+    <h1 class="centered-title">💳💰 Formas de pagamentos</h1>
+    <div class="pix-rectangle">
+        <div class="pix-image">
+            <img src="/images/pix.png" alt="Pix">
+        </div>
+    </div>
+
+<br>
+<br>
+<br>
+
+<div class="footer">
+    <p>&copy; 2023 - Sistema de Financiamento Coletivo - Todos os direitos reservados</p>
+</div>
 </body>
 </html>
