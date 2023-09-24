@@ -1,0 +1,73 @@
+/* Defina margens e preenchimento zero para o body e o html */
+body, html {
+    margin: 0;
+    padding: 0;
+}
+
+/* Estilize o cabeçalho (topo) */
+header {
+    background-color: #222;
+    color: #fff;
+    padding: 10px;
+    text-align: center;
+    width: calc(100% - 20%); /* Largura igual à largura da viewport menos a largura do menu lateral */
+    position: fixed;
+    top: 0;
+    left: 20%;
+    z-index: 1; /* Coloca o cabeçalho acima do conteúdo central */
+}
+
+/* Estilize o botão "Início" */
+.inicio-button {
+   top: 5px; /* Define a distância do topo */
+   right: 15px; /* Define a distância da direita */
+   color: #fff; /* Cor do texto */
+   background-color: #222; /* Cor de fundo branca */
+   padding: 5px 10px;
+}
+
+/* Estilize o logotipo, menu lateral e conteúdo central (mantendo o código anterior) */
+/* ... */
+
+
+/* Estilize o logotipo */
+.logo img {
+    max-width: 100%;
+}
+
+/* Estilize o menu lateral */
+.menu-lateral {
+    background-color: #222;
+    color: #fff;
+    width: 20%; /* Largura do menu lateral (ajuste conforme necessário) */
+    position: fixed; /* Fixa o menu lateral na posição */
+    top: 0; /* Alinha o topo do menu com o topo da página */
+    bottom: 0; /* Alinha a parte inferior do menu com a parte inferior da página */
+    overflow-y: auto; /* Adiciona uma barra de rolagem vertical se necessário */
+    padding: 20px;
+    text-align: center;
+}
+
+.menu-lateral ul {
+    list-style: none;
+    padding: 0;
+}
+
+.menu-lateral li {
+    margin-bottom: 10px;
+    border-right: 2px solid #fff; /* Adiciona borda direita branca */
+}
+
+.menu-lateral a {
+    color: #fff;
+    text-decoration: none;
+}
+
+/* Estilize a área de conteúdo central */
+.conteudo-central {
+    flex-grow: 1;
+    padding: 20px;
+    margin-left: 20%; /* Deixe espaço para o menu lateral */
+    background-color: #ccc; /* Cor de fundo cinza */
+    height: 100vh; /* Ajusta a altura para 100% da altura da viewport */
+}

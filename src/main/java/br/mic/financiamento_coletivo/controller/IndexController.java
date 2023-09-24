@@ -4,12 +4,12 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 
 @Controller
-public class RifaController
+public class IndexController
 {
-
-    @GetMapping("/rifa")
-    public String rifaPage()
+    @GetMapping("/index")
+    public String indexPage()
     {
-        return "rifa";
+        return "index";
     }
+
 }
