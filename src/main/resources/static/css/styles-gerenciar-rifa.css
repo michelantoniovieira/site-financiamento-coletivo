@@ -46,6 +46,7 @@ header {
     overflow-y: auto; /* Adiciona uma barra de rolagem vertical se necessário */
     padding: 20px;
     text-align: center;
+
 }
 
 .menu-lateral ul {
@@ -63,11 +64,124 @@ header {
     text-decoration: none;
 }
 
+/* Adicione estas regras CSS ao seu arquivo CSS existente */
+
 /* Estilize a área de conteúdo central */
 .conteudo-central {
     flex-grow: 1;
     padding: 20px;
     margin-left: 20%; /* Deixe espaço para o menu lateral */
     background-color: #ccc; /* Cor de fundo cinza */
-    height: 100vh; /* Ajusta a altura para 100% da altura da viewport */
+    min-height: 100vh; /* Ajusta a altura mínima para 100% da altura da viewport */
+    display: flex; /* Use flexbox para centralizar vertical e horizontalmente */
+    justify-content: center; /* Centraliza horizontalmente */
+    align-items: center; /* Centraliza verticalmente */
+    text-align: center; /* Centraliza o texto */
+}
+
+/* Estilize a área de informações */
+.informacoes {
+    width: 300px; /* Defina a largura desejada, por exemplo, 300 pixels */
+    height: 200px; /* Defina a altura desejada, por exemplo, 200 pixels */
+    z-index: 2; /* Garante que a área de informações esteja acima de outros elementos */
+    position: relative; /* Altera o posicionamento para relativo */
+    text-align: center; /* Centraliza o texto horizontalmente */
+    margin: 0 auto; /* Centraliza horizontalmente no contêiner pai */
+    top: -100px;
+}
+
+/* Estilo para os rótulos */
+label {
+    display: block;
+    margin-bottom: 5px;
+}
+
+/* Estilo para os campos de texto e a área de texto */
+input[type="text"],
+textarea,
+input[type="number"] {
+    display: block;
+    margin-bottom: 10px;
+    width: 100%;
+}
+
+/* Estilo para ocultar elementos */
+.hidden {
+    display: none;
+}
+
+/* Estilize a classe de grade de itens */
+.item-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr); /* Cria 4 colunas iguais */
+    grid-gap: 10px; /* Espaço entre as células da grade */
+}
+
+/* Estilo para o retângulo de visualização */
+.item {
+    background-color: white; /* Fundo branco */
+    border: 1px solid #ccc;
+    padding: 10px;
+    margin-bottom: 10px;
+    position: relative; /* Permite posicionar os elementos internos */
+}
+
+/* Estilo para o botão "VISUALIZAR" */
+.visualizar-button {
+   background-color: #007bff;
+   color: #fff;
+   padding: 5px 10px;
+   border: none;
+   cursor: pointer;
+}
+/* Estilize o ícone de três pontos */
+.item-options {
+    width: 120px; /* Largura fixa para os três pontinhos */
+    position: relative; /* Adicione esta propriedade */
+    text-align: right; /* Adicione esta linha para alinhar o conteúdo à direita */
+}
+
+.item:hover .item-options {
+    display: block;
+}
+
+/* Estilize os títulos e descrições dos itens (ajuste conforme necessário) */
+.item h3 {
+    font-size: 18px;
+    margin-bottom: 5px;
+}
+
+.item p {
+    font-size: 14px;
+    margin-bottom: 10px;
+}
+
+/* Adicione este CSS ao seu documento */
+    .menu-options {
+        position: relative;
+        display: inline-block;
+ }
+
+.item-options .options {
+    display: none;
+    position: absolute;
+    right: -70px; /* Ajuste a posição à direita do menu de opções */
+    top: 0;
+    background-color: #fff;
+    border: 1px solid #ccc;
+    padding: 5px;
+}
+
+.menu-options:hover .options {
+    display: block;
+}
+
+.options {
+    display: none;
+}
+
+.options a {
+    display: block;
+    text-decoration: none;
+    margin-bottom: 5px;
 }
