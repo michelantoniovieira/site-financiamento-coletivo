@@ -3,7 +3,7 @@ package br.mic.financiamento_coletivo.model;
 import jakarta.persistence.*;
 
 @Entity
-public class Usuario
+public class Administrador
 {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

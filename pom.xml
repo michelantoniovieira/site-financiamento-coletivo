@@ -12,7 +12,7 @@
     <artifactId>sistema-financiamento-coletivo</artifactId>
     <version>0.0.1-SNAPSHOT</version>
     <name>sistema-financiamento-coletivo</name>
-    <description>Sistema de Condominio</description>
+    <description>Sistema de Financiamento Coletivo</description>
     <properties>
         <java.version>17</java.version>
     </properties>
@@ -60,11 +60,6 @@
             <version>3.0.4.RELEASE</version>
         </dependency>
 
-        <!-- https://mvnrepository.com/artifact/org.springframework.cloud/spring-cloud-starter-bootstrap -->
-        <dependency>
-            <groupId>org.springframework.cloud</groupId>
-            <artifactId>spring-cloud-starter-bootstrap</artifactId>
-        </dependency>
 
 
     </dependencies>

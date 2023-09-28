@@ -36,7 +36,7 @@
         <div id="criar-rifa" class="form-container">
             <!-- Formulário para criar uma rifa -->
             <h2>Criar Rifa</h2>
-            <form id="criar-rifa-form">
+            <form method="POST" action="/gerenciarRifa" id="criar-rifa-form">
                 <!-- Campo para o preço -->
                 <label for="preco">Preço por Bilhete:</label>
                 <input type="text" id="preco" name="preco" required>
@@ -50,8 +50,8 @@
                 <textarea id="regulamento" name="regulamento" rows="4" required></textarea>
 
                 <!-- Campo para a quantidade de bilhetes -->
-                <label for="quantidade">Quantidade de Bilhetes:</label>
-                <input type="number" id="quantidade" name="quantidade" required>
+                <label for="quantidade_numeros_rifa">Quantidade de Bilhetes:</label>
+                <input type="number" id="quantidade_numeros_rifa" name="quantidade_numeros_rifa" required>
 
                 <!-- Botão de envio -->
                 <input type="submit" value="Criar Rifa">

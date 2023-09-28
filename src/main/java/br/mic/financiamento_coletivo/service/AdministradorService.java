@@ -1,19 +1,20 @@
 package br.mic.financiamento_coletivo.service;
 
-import br.mic.financiamento_coletivo.model.Usuario;
-import br.mic.financiamento_coletivo.repository.UsuarioRepository;
+import br.mic.financiamento_coletivo.model.Administrador;
+import br.mic.financiamento_coletivo.repository.AdministradorRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 @Service
-public class UsuarioService {
+public class AdministradorService
+{
 
     @Autowired
-    private UsuarioRepository usuarioRepository;
+    private AdministradorRepository administradorRepository;
 
     public boolean verificarCredenciais(String email, String senha) {
         // Consulta o usuário pelo nome de usuário (username)
-        Usuario usuario = usuarioRepository.findByEmail(email);
+        Administrador usuario = administradorRepository.findByEmail(email);
 
         if (usuario != null) {
             // Verifica se a senha fornecida corresponde à senha armazenada no usuário
@@ -24,7 +25,7 @@ public class UsuarioService {
         return false;
     }
 
-    public Usuario buscarUsuarioPorLogin(String email) {
-        return usuarioRepository.findByEmail(email);
+    public Administrador buscarUsuarioPorLogin(String email) {
+        return administradorRepository.findByEmail(email);
     }
 }
