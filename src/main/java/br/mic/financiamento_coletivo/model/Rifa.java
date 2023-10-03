@@ -19,6 +19,9 @@ public class Rifa
     @Column(name="quantidade_numeros_rifa")
     private int quantidade_numeros_rifa;
 
+    public Rifa() {
+    }
+
     public Rifa(BigDecimal preco, String premio, String regulamento, int quantidade_numeros_rifa)
     {
         this.preco = preco;

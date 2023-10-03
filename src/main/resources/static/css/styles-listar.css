@@ -19,16 +19,15 @@ header {
 
 /* Estilize o botão "Início" */
 .inicio-button {
-   top: 5px; /* Define a distância do topo */
-   right: 15px; /* Define a distância da direita */
-   color: #fff; /* Cor do texto */
-   background-color: #222; /* Cor de fundo branca */
-   padding: 5px 10px;
+    top: 5px; /* Define a distância do topo */
+    right: 15px; /* Define a distância da direita */
+    color: #fff; /* Cor do texto */
+    background-color: #222; /* Cor de fundo branca */
+    padding: 5px 10px;
 }
 
 /* Estilize o logotipo, menu lateral e conteúdo central (mantendo o código anterior) */
 /* ... */
-
 
 /* Estilize o logotipo */
 .logo img {
@@ -46,7 +45,6 @@ header {
     overflow-y: auto; /* Adiciona uma barra de rolagem vertical se necessário */
     padding: 20px;
     text-align: center;
-
 }
 
 .menu-lateral ul {
@@ -63,8 +61,6 @@ header {
     color: #fff;
     text-decoration: none;
 }
-
-/* Adicione estas regras CSS ao seu arquivo CSS existente */
 
 /* Estilize a área de conteúdo central */
 .conteudo-central {
@@ -128,25 +124,18 @@ input[type="number"] {
 
 /* Estilo para o botão "VISUALIZAR" */
 .visualizar-button {
-   background-color: #007bff;
-   color: #fff;
-   padding: 5px 10px;
-   border: none;
-   cursor: pointer;
-}
-
-/* Estilo para o ícone de opções */
-.item-options {
-    position: relative;
-    display: inline-block;
-}
-
-/* Estilo para os três pontos (ellipsis) */
-i.fas.fa-ellipsis-v {
-    position: absolute;
-    top: 5px; /* Ajuste a distância vertical conforme necessário */
-    right: 5px; /* Ajuste a distância horizontal conforme necessário */
+    background-color: #007bff;
+    color: #fff;
+    padding: 5px 10px;
+    border: none;
     cursor: pointer;
+}
+
+/* Estilize o ícone de três pontos */
+.item-options {
+    width: 300px; /* Largura fixa para os três pontinhos */
+    position: relative; /* Adicione esta propriedade */
+    text-align: right; /* Adicione esta linha para alinhar o conteúdo à direita */
 }
 
 .item:hover .item-options {
@@ -164,23 +153,79 @@ i.fas.fa-ellipsis-v {
     margin-bottom: 10px;
 }
 
-/* Adicione este CSS ao seu documento */
-    .menu-options {
-        position: relative;
-        display: inline-block;
- }
+/* Estilize a classe de menu de opções */
+.menu-options {
+    position: relative;
+    display: inline-block;
+}
 
+.item-options .options {
+    display: none;
+    position: absolute;
+    right: -70px; /* Ajuste a posição à direita do menu de opções */
+    top: 0;
+    background-color: #fff;
+    border: 1px solid #ccc;
+    padding: 5px;
+}
 
 .menu-options:hover .options {
     display: block;
 }
 
+/* Estilo para o ícone de opções (três pontos) */
+i.fas.fa-ellipsis-v {
+    cursor: pointer;
+}
+
+
+/* Estilo para o contêiner do menu de opções */
+.options-container {
+    position: relative;
+    display: inline-block;
+}
+
 .options {
     display: none;
+    position: absolute;
+    top: 0;
+    right: -100px; /* Ajuste a distância horizontal conforme necessário */
+    background-color: #fff;
+    border: 1px solid #ccc;
+    padding: 5px;
 }
 
 .options a {
     display: block;
     text-decoration: none;
     margin-bottom: 5px;
+}
+
+/* Adicione os estilos CSS para os retângulos de rifa aqui */
+.rifa-container {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 20px;
+    margin-left: 60px;
+}
+
+.rifa-rectangle {
+    border: 2px solid #ccc;
+    padding: 10px;
+    width: 300px;
+    background-color: #f9f9f9;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.rifa-rectangle h3, .rifa-rectangle p {
+    margin: 0;
+}
+
+.rifa-rectangle h3 {
+    font-weight: bold;
+    color: #333;
+}
+
+.rifa-rectangle p {
+    color: #555;
 }

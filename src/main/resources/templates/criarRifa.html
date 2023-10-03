@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="pt-br" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="/css/styles-gerenciar-rifa.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+
+    <title>Login - SFC</title>
+</head>
+<body>
+<div>
+    <header>
+        <!-- Cabeçalho com link de Início -->
+        <a href="/index" class="inicio-button">Início</a>
+    </header>
+
+    <div class="menu-lateral">
+        <!-- Conteúdo do menu lateral aqui -->
+        <div class="logo">
+            <a href="#"><img src="/images/logo.png" alt="Logo"></a>
+        </div>
+
+        <br>
+        <br>
+        <br>
+        <br>
+        <a th:href="@{/criarRifa}" id="create-button">CRIAR</a>
+        <hr>
+        <br>
+        <br>
+        <a th:href="@{/listarRifa}" id="search-button">LISTAR</a>
+        <hr>
+    </div>
+    <div class="conteudo-central">
+        <div id="criar-rifa" class="form-container">
+            <!-- Formulário para criar uma rifa -->
+            <h2>Criar Rifa</h2>
+            <form method="POST" action="/gerenciarRifa" id="criar-rifa-form">
+                <!-- Campo para o preço -->
+                <label for="preco">Preço por Bilhete:</label>
+                <input type="text" id="preco" name="preco" required>
+
+                <!-- Campo para o prêmio -->
+                <label for="premio">Prêmio:</label>
+                <input type="text" id="premio" name="premio" required>
+
+                <!-- Campo para o regulamento -->
+                <label for="regulamento">Regulamento:</label>
+                <textarea id="regulamento" name="regulamento" rows="4" required></textarea>
+
+                <!-- Campo para a quantidade de bilhetes -->
+                <label for="quantidade_numeros_rifa">Quantidade de Bilhetes:</label>
+                <input type="number" id="quantidade_numeros_rifa" name="quantidade_numeros_rifa" required>
+
+                <!-- Botão de envio -->
+                <input type="submit" value="Criar Rifa">
+            </form>
+        </div>
+    </div>
+</div>
+
+<script>
+    // Captura os botões de menu
+    const createButton = document.getElementById("create-button");
+    const searchButton = document.getElementById("search-button");
+
+    // Captura os formulários correspondentes
+    const criarRifaForm = document.getElementById("criar-rifa");
+    const listarRifasForm = document.getElementById("listar-rifas");
+
+    // Adiciona ouvintes de evento para os botões de menu
+    createButton.addEventListener("click", function () {
+        // Exibe o formulário de criação e oculta o de listagem
+        criarRifaForm.classList.remove("hidden");
+        listarRifasForm.classList.add("hidden");
+    });
+
+    searchButton.addEventListener("click", function () {
+        // Exibe o formulário de listagem e oculta o de criação
+        listarRifasForm.classList.remove("hidden");
+        criarRifaForm.classList.add("hidden");
+    });
+
+ function toggleOptions(optionsId) {
+    const options = document.getElementById(optionsId);
+    const allOptions = document.querySelectorAll('.options');
+
+    allOptions.forEach((option) => {
+        if (option !== options) {
+            option.style.display = 'none';
+        }
+    });
+
+    if (options.style.display === "block") {
+        options.style.display = "none";
+    } else {
+        options.style.display = "block";
+    }
+}
+
+
+</script>
+</body>
+</html>

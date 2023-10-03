@@ -1,30 +1,33 @@
 package br.mic.financiamento_coletivo.controller;
 
 import br.mic.financiamento_coletivo.model.Rifa;
+import br.mic.financiamento_coletivo.repository.RifaRepository;
 import br.mic.financiamento_coletivo.service.RifaService;
 import jakarta.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import java.math.BigDecimal;
+import java.util.List;
 
 @Controller
-public class GerenciarRifaController
-{
+public class GerenciarRifaController {
     private final RifaService rifaService;
+    private final RifaRepository rifaRepository;
 
     @Autowired
-    public GerenciarRifaController(RifaService rifaService) {
+    public GerenciarRifaController(RifaService rifaService, RifaRepository rifaRepository) {
         this.rifaService = rifaService;
+        this.rifaRepository = rifaRepository;
     }
 
     @GetMapping("/gerenciarRifa")
-    public String gerenciarRifaPage()
-    {
+    public String gerenciarRifaPage() {
         return "gerenciarRifa";
     }
 
@@ -34,17 +37,7 @@ public class GerenciarRifaController
                                 @RequestParam("regulamento") String regulamento,
                                 @RequestParam("quantidade_numeros_rifa") int quantidade_numeros_rifa,
                                 RedirectAttributes redirectAttributes,
-                                HttpSession session)
-    {
-        // Os valores dos campos do formulário agora estão disponíveis como argumentos do método.
-        // Você pode usá-los da maneira que precisar.
-
-        // Exemplo de uso:
-        System.out.println("Preço: " + preco);
-        System.out.println("Prêmio: " + premio);
-        System.out.println("Regulamento: " + regulamento);
-        System.out.println("Quantidade de Bilhetes: " + quantidade_numeros_rifa);
-
+                                HttpSession session) {
         // Crie um objeto Rifa com os parâmetros recebidos
         Rifa novaRifa = new Rifa(preco, premio, regulamento, quantidade_numeros_rifa);
 
@@ -55,4 +48,15 @@ public class GerenciarRifaController
         return "redirect:/gerenciarRifa";
     }
 
+    @GetMapping("/criarRifa")
+    public String criarRifaPage() {
+        return "criarRifa";
+    }
+
+    @GetMapping("/listarRifa")
+    public String listarRifaPage(Model model) {
+        List<Rifa> rifas = rifaRepository.findAll();
+        model.addAttribute("rifas", rifas);
+        return "listarRifa"; // Nome da página HTML
+    }
 }

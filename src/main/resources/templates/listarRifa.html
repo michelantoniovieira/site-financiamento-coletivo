@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="pt-br" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="/css/styles-listar.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <style>
+        /* Adicione o seu estilo CSS aqui */
+        /* ... */
+        .item-options {
+            position: absolute;
+            top: 15px; /* Ajuste a distância do topo */
+            right: 15px; /* Ajuste a distância da direita */
+        }
+
+        i.fas.fa-ellipsis-v {
+            cursor: pointer;
+        }
+
+        .options {
+            display: none;
+            position: absolute;
+            top: 100%; /* Coloque o menu de opções abaixo do ícone */
+            right: 0;
+            background-color: #fff;
+            border: 1px solid #ccc;
+            padding: 5px;
+            z-index: 2; /* Defina um valor maior para o z-index para ficar na frente */
+        }
+
+        .item-options.active .options {
+            display: block;
+        }
+    </style>
+    <title>Gerenciar Rifas - SFC</title>
+</head>
+<body>
+<div>
+    <header>
+        <!-- Cabeçalho com link de Início -->
+        <a href="/index" class="inicio-button">Início</a>
+    </header>
+
+    <div class="menu-lateral">
+        <!-- Conteúdo do menu lateral aqui -->
+        <div class="logo">
+            <a href="#"><img src="/images/logo.png" alt="Logo"></a>
+        </div>
+
+        <br>
+        <br>
+        <br>
+        <br>
+        <a th:href="@{/criarRifa}" id="create-button">CRIAR</a>
+        <hr>
+        <br>
+        <br>
+        <a th:href="@{/listarRifa}" id="search-button">LISTAR</a>
+        <hr>
+    </div>
+    <div class="conteudo-central">
+        <div id="listar-rifas">
+            <!-- Formulário para listar rifas -->
+            <h2>Listar Rifas</h2>
+            <div class="rifa-container">
+                <div class="item" th:each="rifa : ${rifas}">
+                    <div class="rifa-rectangle">
+                        <!-- Campos do item -->
+                        <h3>ID: <span th:text="${rifa.id_rifa}"></span></h3>
+                        <p>Preço: <span th:text="${rifa.preco}"></span></p>
+                        <p>Prêmio: <span th:text="${rifa.premio}"></span></p>
+                        <p>Regulamento: <span th:text="${rifa.regulamento}"></span></p>
+                        <p>Quantidade de Números: <span th:text="${rifa.quantidade_numeros_rifa}"></span></p>
+                        <!-- Botão "VISUALIZAR" -->
+                        <button class="visualizar-button">VISUALIZAR</button>
+                        <!-- Ícone de opções (três pontos) -->
+                        <div class="item-options">
+                            <i class="fas fa-ellipsis-v"></i>
+                            <!-- Menu de opções -->
+                            <div class="options">
+                                <a href="#" class="edit-option">Editar</a>
+                                <a href="#" class="delete-option">Excluir</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<script>
+    // Adiciona um ouvinte de eventos para os ícones de três pontos
+    const ellipsisIcons = document.querySelectorAll('.fas.fa-ellipsis-v');
+
+    ellipsisIcons.forEach((icon) => {
+        icon.addEventListener('click', () => {
+            // Obtém o elemento do menu de opções associado ao ícone clicado
+            const optionsElement = icon.parentElement.querySelector('.options');
+
+            // Alterna a classe 'active' para mostrar/ocultar o menu de opções
+            if (optionsElement.style.display === "block") {
+                optionsElement.style.display = "none";
+            } else {
+                optionsElement.style.display = "block";
+            }
+        });
+    });
+</script>
+</body>
+</html>
