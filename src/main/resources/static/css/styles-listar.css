@@ -229,3 +229,30 @@ i.fas.fa-ellipsis-v {
 .rifa-rectangle p {
     color: #555;
 }
+
+        /* Adicione o seu estilo CSS aqui */
+        /* ... */
+        .item-options {
+            position: absolute;
+            top: 15px; /* Ajuste a distância do topo */
+            right: 15px; /* Ajuste a distância da direita */
+        }
+
+        i.fas.fa-ellipsis-v {
+            cursor: pointer;
+        }
+
+        .options {
+            display: none;
+            position: absolute;
+            top: 100%; /* Coloque o menu de opções abaixo do ícone */
+            right: 0;
+            background-color: #fff;
+            border: 1px solid #ccc;
+            padding: 5px;
+            z-index: 2; /* Defina um valor maior para o z-index para ficar na frente */
+        }
+
+        .item-options.active .options {
+            display: block;
+        }

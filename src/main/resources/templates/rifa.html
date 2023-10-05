@@ -33,10 +33,10 @@
 <div class="rifa-selection">
     <p><b>🔎Selecione uma rifa</b></p>
     <hr>
-    <select>
-        <option value="opcao1">Opção 1</option>
-        <option value="opcao2">Opção 2</option>
-        <option value="opcao3">Opção 3</option>
+    <select id="rifasSelect" th:field="*{selectedRifa}">
+        <option value="">Selecione uma rifa</option>
+        <!-- Usando Thymeleaf para iterar sobre os códigos de rifa e criar as opções -->
+        <option th:each="codigoRifa : ${codigosRifa}" th:value="${codigoRifa}" th:text="${codigoRifa}"></option>
     </select>
 </div>
 
@@ -98,6 +98,20 @@
 </table>
 
 <script>
+    // JavaScript em rifa.html
+document.addEventListener("DOMContentLoaded", function () {
+    const rifaSelect = document.getElementById("rifasSelect");
+    const urlParams = new URLSearchParams(window.location.search);
+    const rifaId = urlParams.get("id");
+
+    if (rifaId) {
+        const option = rifaSelect.querySelector(`option[value="${rifaId}"]`);
+        if (option) {
+            option.selected = true;
+        }
+    }
+});
+
     // Função para criar e preencher a matriz de números
     function createNumberMatrix() {
         const numeroMatrix = document.getElementById('numero-matrix');

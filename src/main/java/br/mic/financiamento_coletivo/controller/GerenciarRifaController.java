@@ -5,15 +5,19 @@ import br.mic.financiamento_coletivo.repository.RifaRepository;
 import br.mic.financiamento_coletivo.service.RifaService;
 import jakarta.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import java.math.BigDecimal;
 import java.util.List;
+import java.util.Map;
 
 @Controller
 public class GerenciarRifaController {
@@ -45,7 +49,7 @@ public class GerenciarRifaController {
         rifaService.salvarRifa(novaRifa); // Supondo que você tenha um serviço chamado rifaService
 
         // Redirecione para a página principal
-        return "redirect:/gerenciarRifa";
+        return "redirect:/listarRifa";
     }
 
     @GetMapping("/criarRifa")
@@ -58,5 +62,25 @@ public class GerenciarRifaController {
         List<Rifa> rifas = rifaRepository.findAll();
         model.addAttribute("rifas", rifas);
         return "listarRifa"; // Nome da página HTML
+    }
+
+    @PostMapping("/excluirRifa")
+    public String excluirRifa(@RequestParam("id") Integer id, RedirectAttributes redirectAttributes) {
+        try {
+            if (id == null) {
+                // Lidar com o caso em que o ID é nulo
+                return "listarRifa";
+            }
+
+            // Chame um serviço ou repositório para excluir a rifa com o ID especificado
+            rifaService.excluirRifa(id); // Substitua "excluirRifa" pelo método real que você possui
+
+            // Se a exclusão for bem-sucedida, você pode retornar uma resposta de sucesso
+            return "listarRifa";
+        } catch (Exception e) {
+            // Trate qualquer exceção que possa ocorrer durante a exclusão
+            redirectAttributes.addFlashAttribute("error", "Erro ao excluir a rifa");
+            return "listarRifa";
+        }
     }
 }

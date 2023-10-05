@@ -6,32 +6,7 @@
     <link rel="stylesheet" href="/css/styles-listar.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
     <style>
-        /* Adicione o seu estilo CSS aqui */
-        /* ... */
-        .item-options {
-            position: absolute;
-            top: 15px; /* Ajuste a distância do topo */
-            right: 15px; /* Ajuste a distância da direita */
-        }
 
-        i.fas.fa-ellipsis-v {
-            cursor: pointer;
-        }
-
-        .options {
-            display: none;
-            position: absolute;
-            top: 100%; /* Coloque o menu de opções abaixo do ícone */
-            right: 0;
-            background-color: #fff;
-            border: 1px solid #ccc;
-            padding: 5px;
-            z-index: 2; /* Defina um valor maior para o z-index para ficar na frente */
-        }
-
-        .item-options.active .options {
-            display: block;
-        }
     </style>
     <title>Gerenciar Rifas - SFC</title>
 </head>
@@ -73,14 +48,14 @@
                         <p>Regulamento: <span th:text="${rifa.regulamento}"></span></p>
                         <p>Quantidade de Números: <span th:text="${rifa.quantidade_numeros_rifa}"></span></p>
                         <!-- Botão "VISUALIZAR" -->
-                        <button class="visualizar-button">VISUALIZAR</button>
+                        <button class="visualizar-button" th:attr="onclick='visualizarRifa(\'' + ${rifa.id_rifa} + '\')'">VISUALIZAR</button>
                         <!-- Ícone de opções (três pontos) -->
                         <div class="item-options">
                             <i class="fas fa-ellipsis-v"></i>
                             <!-- Menu de opções -->
                             <div class="options">
-                                <a href="#" class="edit-option">Editar</a>
-                                <a href="#" class="delete-option">Excluir</a>
+                                <!-- Opção "Excluir" -->
+                                <a th:attr="data-id=${rifa.id_rifa}" class="delete-option" style="color: blue; text-decoration: underline; cursor: pointer;">Excluir</a>
                             </div>
                         </div>
                     </div>
@@ -90,6 +65,34 @@
     </div>
 </div>
 <script>
+    // Função para redirecionar para a tela "/rifa" com o ID da rifa
+    function visualizarRifa(rifaId) {
+    alert(`Clicou no botão "VISUALIZAR" para a rifa com o ID: ${rifaId}`);
+        // Redirecionar para a tela "/rifa" com o ID da rifa
+        window.location.href = `/rifa?id=${rifaId}`;
+    }
+
+    // Função para associar um evento de clique aos botões "Visualizar"
+    document.addEventListener("DOMContentLoaded", function () {
+        const visualizarButtons = document.querySelectorAll(".visualizar-button");
+        const rifaSelect = document.getElementById("rifasSelect");
+
+        visualizarButtons.forEach(function (button) {
+            button.addEventListener("click", function () {
+                const rifaId = button.getAttribute("data-id");
+
+                // Encontrar a opção correspondente no combobox
+                const option = rifaSelect.querySelector(`option[value="${rifaId}"]`);
+
+                if (option) {
+                    // Definir a opção como selecionada
+                    option.selected = true;
+                      console.log(bepela);
+                }
+            });
+        });
+    });
+
     // Adiciona um ouvinte de eventos para os ícones de três pontos
     const ellipsisIcons = document.querySelectorAll('.fas.fa-ellipsis-v');
 
@@ -106,6 +109,40 @@
             }
         });
     });
+
+    // Seletor para os botões "Excluir"
+    const deleteButtons = document.querySelectorAll('.delete-option');
+
+    deleteButtons.forEach((deleteButton) => {
+        deleteButton.addEventListener('click', () => {
+            // Obtém o ID da rifa a ser excluída a partir do atributo data-id
+            const rifaId = deleteButton.getAttribute('data-id');
+
+            // Confirmação de exclusão (você pode personalizar essa mensagem)
+            const confirmacao = confirm('Tem certeza de que deseja excluir esta rifa?');
+
+            if (confirmacao) {
+                // Enviar uma solicitação para excluir a rifa com o ID rifaId
+                // Isso pode ser feito por meio de uma solicitação AJAX ou da maneira que seu backend requer.
+                // Se você estiver usando Thymeleaf com Spring Boot, pode criar um controlador para tratar essa solicitação.
+
+                // Exemplo de solicitação AJAX com fetch:
+                fetch(`/excluirRifa?id=${rifaId}`, {
+                    method: 'POST'
+                }).then(response => {
+                    if (response.ok) {
+                        // Rifa excluída com sucesso, você pode atualizar a lista de rifas aqui
+                        window.location.href = "/listarRifa";
+                    } else {
+                        // Tratar erro, se necessário
+                    }
+                }).catch(error => {
+                    // Tratar erro, se necessário
+                });
+            }
+        });
+    });
+
 </script>
 </body>
 </html>
