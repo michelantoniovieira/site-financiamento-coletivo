@@ -47,4 +47,9 @@ public class RifaService {
                 .map(rifa -> String.valueOf(rifa.getId_rifa()))
                 .collect(Collectors.toList());
     }
+
+    public Rifa obterRifaPorId(Integer id) {
+        return rifaRepository.findById(id).orElse(null);
+    }
+
 }

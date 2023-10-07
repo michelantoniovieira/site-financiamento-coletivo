@@ -5,6 +5,15 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="/css/styles.css">
     <title>Página de Rifa</title>
+    <style>
+        /* Estilo para números selecionáveis */
+        .numero-selecionavel {
+            cursor: pointer;
+        }
+        .numero-selecionavel.selected {
+            background-color: orange;
+        }
+    </style>
 </head>
 <body>
 <header class="header">
@@ -33,7 +42,7 @@
 <div class="rifa-selection">
     <p><b>🔎Selecione uma rifa</b></p>
     <hr>
-    <select id="rifasSelect" th:field="*{selectedRifa}">
+    <select id="rifasSelect">
         <option value="">Selecione uma rifa</option>
         <!-- Usando Thymeleaf para iterar sobre os códigos de rifa e criar as opções -->
         <option th:each="codigoRifa : ${codigosRifa}" th:value="${codigoRifa}" th:text="${codigoRifa}"></option>
@@ -56,22 +65,22 @@
         </div>
     </div>
 
-
-        <div class="right-column">
-            <!-- Três retângulos para informações -->
-            <div class="info-rectangle-1">
-                <p>Preço da Rifa</p>
-            </div>
-
-            <div class="info-rectangle-2">
-                <p>Sorteio: Loteria Federal</p>
-            </div>
-
-            <div class="info-rectangle-3">
-                <p>Prêmio</p>
-            </div>
+    <div class="right-column">
+        <!-- Três retângulos para informações -->
+        <div class="info-rectangle-1">
+            <p>Preço da Rifa</p>
+            <p th:text="${rifa.preco}"></p>
         </div>
 
+        <div class="info-rectangle-2">
+            <p>Sorteio: Loteria Federal</p>
+        </div>
+
+        <div class="info-rectangle-3">
+            <p>Prêmio</p>
+            <p th:text="${rifa.premio}"></p>
+        </div>
+    </div>
 </div>
 
 <br>
@@ -81,12 +90,7 @@
 <div class="description-column" style="text-align: justify;">
     <p><b>📕Regulamento / Descrição</b></p>
     <hr>
-    <p>Sorteio Realizado pela Loteria Federal.</p>
-    <p>Sorteio será realizado quando vender mais de 1300 números, a data será informada via Youtube, Instagram e Grupo de Whatsapp do Mp3playerchannel.</p>
-    <p>O primeiro sorteio do dia será o vencedor. Caso não haja vencedor no primeiro sorteio, iremos para o segundo sorteio, e assim sucessivamente até o quinto sorteio. Caso não haja vencedor, uma nova data será informada.</p>
-    <p>O Primeiro colocado ganha a conta com o ED 500.</p>
-    <p>O maior comprador da Rifa ganha 750 de TC.</p>
-    <p>Entraremos em contato com o vencedor via Whatsapp, e o vencedor tem até 7 dias para enviar o NICK para o envio das TCs. Caso não envie, será sorteado novamente.</p>
+    <p th:text="${rifa.regulamento}"></p>
 </div>
 
 <h1 class="centered-title">Escolha um número</h1>
@@ -99,45 +103,80 @@
 
 <script>
     // JavaScript em rifa.html
-document.addEventListener("DOMContentLoaded", function () {
-    const rifaSelect = document.getElementById("rifasSelect");
-    const urlParams = new URLSearchParams(window.location.search);
-    const rifaId = urlParams.get("id");
+ document.addEventListener("DOMContentLoaded", function () {
+     const rifaSelect = document.getElementById("rifasSelect");
 
-    if (rifaId) {
-        const option = rifaSelect.querySelector(`option[value="${rifaId}"]`);
-        if (option) {
-            option.selected = true;
-        }
-    }
-});
+     // Função para criar e preencher a matriz de números
+     function createNumberMatrix() {
+         const numeroMatrix = document.getElementById('numero-matrix');
+         let numero = 1;
+         for (let row = 0; row < 10; row++) {
+             const newRow = document.createElement('tr');
+             for (let col = 0; col < 15; col++) {
+                 const newCell = document.createElement('td');
+                 newCell.textContent = numero;
+                 newCell.classList.add("numero-selecionavel"); // Adicione a classe "numero-selecionavel" aos números
+                 newRow.appendChild(newCell);
+                 numero++;
+             }
+             numeroMatrix.appendChild(newRow);
+         }
+     }
 
-    // Função para criar e preencher a matriz de números
-    function createNumberMatrix() {
-        const numeroMatrix = document.getElementById('numero-matrix');
-        let numero = 1;
-        for (let row = 0; row < 10; row++) {
-            const newRow = document.createElement('tr');
-            for (let col = 0; col < 15; col++) {
-                const newCell = document.createElement('td');
-                newCell.textContent = numero;
-                newRow.appendChild(newCell);
-                numero++;
-            }
-            numeroMatrix.appendChild(newRow);
-        }
-    }
+     // Adicione um ouvinte de evento de clique a todas as células da tabela
+     const numeroMatrix = document.getElementById('numero-matrix');
+     numeroMatrix.addEventListener("click", function (event) {
+         const numeroSelecionavel = event.target;
 
-    // Chame a função para gerar a matriz de números quando a página for carregada
-    window.onload = createNumberMatrix;
+         // Verifique se o elemento clicado possui a classe "numero-selecionavel"
+         if (numeroSelecionavel.classList.contains("numero-selecionavel")) {
+             // Alternar a classe "selected" quando uma célula é clicada
+             numeroSelecionavel.classList.toggle("selected");
+         }
+     });
+
+     // Chame a função para gerar a matriz de números quando a página for carregada
+     createNumberMatrix();
+
+     // Verifique se há um parâmetro 'id_rifa' na URL e defina o valor selecionado no combobox
+     const urlParams = new URLSearchParams(window.location.search);
+     const idRifa = urlParams.get("id_rifa");
+     if (idRifa) {
+         rifaSelect.value = idRifa;
+     }
+
+     // Adicione um ouvinte de evento ao combobox
+     rifaSelect.addEventListener("change", function () {
+         // Obtém o valor selecionado (o código da rifa)
+         const selectedRifa = rifaSelect.value;
+
+         // Atualiza a URL da página com o novo valor selecionado
+         const currentUrl = window.location.href;
+         const newUrl = updateQueryStringParameter(currentUrl, 'id_rifa', selectedRifa);
+         window.location.href = newUrl;
+     });
+ });
+
+ // Função auxiliar para atualizar parâmetros de consulta na URL
+ function updateQueryStringParameter(uri, key, value) {
+     const re = new RegExp("([?&])" + key + "=.*?(&|$)", "i");
+     const separator = uri.indexOf('?') !== -1 ? "&" : "?";
+     if (uri.match(re)) {
+         return uri.replace(re, '$1' + key + "=" + value + '$2');
+     }
+     else {
+         return uri + separator + key + "=" + value;
+     }
+ }
+
 </script>
 
-    <h1 class="centered-title">💳💰 Formas de pagamentos</h1>
-    <div class="pix-rectangle">
-        <div class="pix-image">
-            <img src="/images/pix.png" alt="Pix">
-        </div>
+<h1 class="centered-title">💳💰 Formas de pagamentos</h1>
+<div class="pix-rectangle">
+    <div class="pix-image">
+        <img src="/images/pix.png" alt="Pix">
     </div>
+</div>
 
 <br>
 <br>
