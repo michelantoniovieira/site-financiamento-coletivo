@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="pt-br">
+<html lang="pt-br" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -10,8 +10,29 @@
         .numero-selecionavel {
             cursor: pointer;
         }
-        .numero-selecionavel.selected {
-            background-color: orange;
+
+        .selected {
+            background-color: orange !important;
+        }
+
+        /* CSS para o retângulo de exibição de preço */
+        .price-display {
+            background-color: #f1f1f1;
+            text-align: center;
+            padding: 10px 0;
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            height: 0;
+            transition: height 0.3s;
+            overflow: hidden;
+            z-index: 9999;
+        }
+
+        /* CSS para o preço dentro do retângulo */
+        #total-price {
+            font-weight: bold;
         }
     </style>
 </head>
@@ -69,7 +90,9 @@
         <!-- Três retângulos para informações -->
         <div class="info-rectangle-1">
             <p>Preço da Rifa</p>
-            <p th:text="${rifa.preco}"></p>
+            <p th:text="${rifa.preco}" id="preco-rifa" class="preco-rifa"></p>
+            <p>Total de Números</p>
+            <p th:text="${rifa.quantidade_numeros_rifa}" id="quantidadeNumerosRifa"></p>
         </div>
 
         <div class="info-rectangle-2">
@@ -103,73 +126,107 @@
 
 <script>
     // JavaScript em rifa.html
- document.addEventListener("DOMContentLoaded", function () {
-     const rifaSelect = document.getElementById("rifasSelect");
+    document.addEventListener("DOMContentLoaded", function () {
+        const rifaSelect = document.getElementById("rifasSelect");
+        const quantidadeNumerosRifaElement = document.getElementById("quantidadeNumerosRifa");
+        const quantidadeNumerosRifa = parseInt(quantidadeNumerosRifaElement.textContent);
 
-     // Função para criar e preencher a matriz de números
-     function createNumberMatrix() {
-         const numeroMatrix = document.getElementById('numero-matrix');
-         let numero = 1;
-         for (let row = 0; row < 10; row++) {
-             const newRow = document.createElement('tr');
-             for (let col = 0; col < 15; col++) {
-                 const newCell = document.createElement('td');
-                 newCell.textContent = numero;
-                 newCell.classList.add("numero-selecionavel"); // Adicione a classe "numero-selecionavel" aos números
-                 newRow.appendChild(newCell);
-                 numero++;
-             }
-             numeroMatrix.appendChild(newRow);
-         }
-     }
+        // Função para criar e preencher a matriz de números
+        function createNumberMatrix() {
+            const numeroMatrix = document.getElementById('numero-matrix');
+            let numero = 1;
+            const maxColunas = 15; // Número máximo de colunas por linha
 
-     // Adicione um ouvinte de evento de clique a todas as células da tabela
-     const numeroMatrix = document.getElementById('numero-matrix');
-     numeroMatrix.addEventListener("click", function (event) {
-         const numeroSelecionavel = event.target;
+            for (let row = 0; row < Math.ceil(quantidadeNumerosRifa / maxColunas); row++) {
+                const newRow = document.createElement('tr');
 
-         // Verifique se o elemento clicado possui a classe "numero-selecionavel"
-         if (numeroSelecionavel.classList.contains("numero-selecionavel")) {
-             // Alternar a classe "selected" quando uma célula é clicada
-             numeroSelecionavel.classList.toggle("selected");
-         }
-     });
+                for (let col = 0; col < maxColunas && numero <= quantidadeNumerosRifa; col++) {
+                    const newCell = document.createElement('td');
+                    newCell.textContent = numero;
+                    newCell.classList.add("numero-selecionavel"); // Adicione a classe "numero-selecionavel" aos números
 
-     // Chame a função para gerar a matriz de números quando a página for carregada
-     createNumberMatrix();
+                    // Adicione um ouvinte de evento de clique a cada célula
+                    newCell.addEventListener("click", function () {
+                        // Toggle da classe "selected" para manter o número laranja após o clique
+                        newCell.classList.toggle("selected");
 
-     // Verifique se há um parâmetro 'id_rifa' na URL e defina o valor selecionado no combobox
-     const urlParams = new URLSearchParams(window.location.search);
-     const idRifa = urlParams.get("id_rifa");
-     if (idRifa) {
-         rifaSelect.value = idRifa;
-     }
+                        // Chame a função para atualizar o preço
+                        updatePriceDisplay();
+                    });
+                    newRow.appendChild(newCell);
+                    numero++;
+                }
 
-     // Adicione um ouvinte de evento ao combobox
-     rifaSelect.addEventListener("change", function () {
-         // Obtém o valor selecionado (o código da rifa)
-         const selectedRifa = rifaSelect.value;
+                numeroMatrix.appendChild(newRow);
+            }
+        }
 
-         // Atualiza a URL da página com o novo valor selecionado
-         const currentUrl = window.location.href;
-         const newUrl = updateQueryStringParameter(currentUrl, 'id_rifa', selectedRifa);
-         window.location.href = newUrl;
-     });
- });
+        // Chame a função para gerar a matriz de números quando a página for carregada
+        createNumberMatrix();
 
- // Função auxiliar para atualizar parâmetros de consulta na URL
- function updateQueryStringParameter(uri, key, value) {
-     const re = new RegExp("([?&])" + key + "=.*?(&|$)", "i");
-     const separator = uri.indexOf('?') !== -1 ? "&" : "?";
-     if (uri.match(re)) {
-         return uri.replace(re, '$1' + key + "=" + value + '$2');
-     }
-     else {
-         return uri + separator + key + "=" + value;
-     }
- }
+        // Verifique se há um parâmetro 'id_rifa' na URL e defina o valor selecionado no combobox
+        const urlParams = new URLSearchParams(window.location.search);
+        const idRifa = urlParams.get("id_rifa");
+        if (idRifa) {
+            rifaSelect.value = idRifa;
+        }
 
+        // Adicione um ouvinte de evento ao combobox
+        rifaSelect.addEventListener("change", function () {
+            // Obtém o valor selecionado (o código da rifa)
+            const selectedRifa = rifaSelect.value;
+
+            // Atualiza a URL da página com o novo valor selecionado
+            const currentUrl = window.location.href;
+            const newUrl = updateQueryStringParameter(currentUrl, 'id_rifa', selectedRifa);
+            window.location.href = newUrl;
+        });
+
+        // Função para verificar se há números selecionados e mostrar/ocultar o rodapé
+        function updatePriceDisplay() {
+            const selectedNumbers = document.querySelectorAll(".numero-selecionavel.selected");
+            const priceDisplay = document.getElementById("price-display");
+            const precoRifaElement = document.querySelector(".preco-rifa");
+            const precoDisplayElement = document.getElementById("preco-rifa-dinamico");
+            let contador = selectedNumbers.length; // Atualize o contador com a quantidade de números selecionados
+
+            if (contador > 0) {
+                priceDisplay.style.height = "50px"; // Defina a altura desejada do rodapé
+                // Obtenha o preço da rifa do elemento atual
+                const precoRifa = parseFloat(precoRifaElement.textContent);
+
+                // Multiplique o preço da rifa pelo valor do contador
+                const precoMultiplicado = precoRifa * contador;
+
+                // Exiba o preço multiplicado no novo local
+                precoDisplayElement.textContent = precoMultiplicado.toFixed(2);
+            } else {
+                priceDisplay.style.height = "0"; // Oculte o rodapé se nenhum número estiver selecionado
+                precoDisplayElement.textContent = "0.00"; // Defina o preço como 0 quando nenhum número estiver selecionado
+            }
+        }
+    });
+
+    // Função auxiliar para atualizar parâmetros de consulta na URL
+    function updateQueryStringParameter(uri, key, value) {
+        const re = new RegExp("([?&])" + key + "=.*?(&|$)", "i");
+        const separator = uri.indexOf('?') !== -1 ? "&" : "?";
+        if (uri.match(re)) {
+            return uri.replace(re, '$1' + key + "=" + value + '$2');
+        }
+        else {
+            return uri + separator + key + "=" + value;
+        }
+    }
 </script>
+
+
+
+
+
+<div class="price-display" id="price-display">
+    <p>Preço da Rifa: <span id="preco-rifa-dinamico"></span></p>
+</div>
 
 <h1 class="centered-title">💳💰 Formas de pagamentos</h1>
 <div class="pix-rectangle">
