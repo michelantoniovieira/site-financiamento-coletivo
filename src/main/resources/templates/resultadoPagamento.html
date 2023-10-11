@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="pt-br" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Gerar QR Code com QRCode.js</title>
+    <script src="https://cdn.rawgit.com/davidshimjs/qrcodejs/gh-pages/qrcode.min.js"></script>
+</head>
+<body>
+<h1>Gerador de QR Code</h1>
+
+<!-- Div para exibir o QR Code -->
+<div id="qrcode"></div>
+<p>O QR Code é: <span th:text="${pixUrl}"></span></p>
+
+<script th:inline="javascript">
+    // Dados do QR Code (você deve substituir pelo seu qrCodeBase64)
+    var pixUrl = /*[[${pixUrl}]]*/ "";
+
+    var qrcode = new QRCode(document.getElementById("qrcode"), {
+        text: pixUrl, // Substitua pelo seu link ou dados
+        width: 128,
+        height: 128
+    });
+</script>
+</body>
+</html>
