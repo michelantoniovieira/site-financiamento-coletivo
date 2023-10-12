@@ -21,25 +21,22 @@
         </div>
     </nav>
 </header>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
 
-<script src="https://sdk.mercadopago.com/js/v2"></script>
-
-<script>
-    const mp = new MercadoPago("APP_USR-5579030860678637-101022-182436c107f980c52a171e0f27fd930c-202843783");
-</script>
-
-<br>
-<br>
-<br>
-<br>
-<br>
-<br>
-<br>
-<br>
-<br>
 
 <form id="form-checkout" action="/process_payment" method="post">
     <div>
+        <input type="hidden" name="id_rifa" id="id_rifa" value="">
+        <input type="hidden" name="numeros" id="numeros" value="">
         <div>
             <label for="payerFirstName">Nome</label>
             <input id="form-checkout__payerFirstName" name="payerFirstName" type="text">
@@ -51,6 +48,10 @@
         <div>
             <label for="email">E-mail</label>
             <input id="form-checkout__email" name="email" type="text">
+        </div>
+        <div>
+            <label for="telefone">Telefone</label>
+            <input id="form-checkout__telefone" name="telefone" type="text">
         </div>
         <div>
             <label for="identificationType">Tipo de documento</label>
@@ -67,60 +68,113 @@
             <input type="hidden" name="transactionAmount" id="transactionAmount" value="100">
             <input type="hidden" name="description" id="description" value="Nome do Produto">
             <br>
-            <button type="submit">Pagar</button>
+            <button id="btnPagar" type="submit" style="display: none;">Pagar</button>
         </div>
     </div>
 </form>
 
+<div id="id-rifa-display">aqui</div>
+<div id="numeros-selecionados-display">aqui</div>
+
+
 <script>
-(async function getIdentificationTypes() {
-try {
-const identificationTypes = await mp.getIdentificationTypes();
-const identificationTypeElement = document.getElementById('form-checkout__identificationType');
+    // Obtenha referências para os campos de entrada
+    const payerFirstNameInput = document.getElementById('form-checkout__payerFirstName');
+    const payerLastNameInput = document.getElementById('form-checkout__payerLastName');
+    const emailInput = document.getElementById('form-checkout__email');
+    const telefoneInput = document.getElementById('form-checkout__telefone');
+    const identificationNumberInput = document.getElementById('form-checkout__identificationNumber');
+    const btnPagar = document.getElementById('btnPagar');
 
-createSelectOptions(identificationTypeElement, identificationTypes);
-} catch (e) {
-return console.error('Error getting identificationTypes: ', e);
-}
-})();
+    // Ouvinte de eventos para campos de entrada
+    payerFirstNameInput.addEventListener('input', checkFields);
+    payerLastNameInput.addEventListener('input', checkFields);
+    emailInput.addEventListener('input', checkFields);
+    telefoneInput.addEventListener('input', checkFields);
+    identificationNumberInput.addEventListener('input', checkFields);
 
-function createSelectOptions(elem, options, labelsAndKeys = { label: "name", value: "id" }) {
-const { label, value } = labelsAndKeys;
-
-elem.options.length = 0;
-
-const tempOptions = document.createDocumentFragment();
-
-options.forEach(option => {
-const optValue = option[value];
-const optLabel = option[label];
-
-const opt = document.createElement('option');
-opt.value = optValue;
-opt.textContent = optLabel;
-
-tempOptions.appendChild(opt);
-});
-
-elem.appendChild(tempOptions);
-}
+    function checkFields() {
+        // Verifique se todos os campos necessários estão preenchidos
+        if (
+            payerFirstNameInput.value &&
+            payerLastNameInput.value &&
+            emailInput.value &&
+            telefoneInput.value &&
+            identificationNumberInput.value
+        ) {
+            // Tornar o botão "Pagar" visível e claro
+            btnPagar.style.display = 'block';
+            btnPagar.style.backgroundColor = '#4CAF50'; /* Cor clara desejada */
+        } else {
+            // Manter o botão "Pagar" escuro
+            btnPagar.style.display = 'none';
+        }
+    }
 </script>
 
-<br>
-<br>
-<br>
-<br>
-<br>
-<br>
-<br>
-<br>
-<br>
-<br>
-<br>
-<br>
+<script>
+    // Obtenha a string de consulta da URL, que contém os números selecionados
+    const queryString = window.location.search;
 
-<div class="footer">
-    <p>&copy; 2023 - Sistema de Financiamento Coletivo - Todos os direitos reservados</p>
-</div>
+    // Analise a string de consulta para obter os parâmetros, neste caso, 'numeros'
+    const urlParams = new URLSearchParams(queryString);
+
+    // Obtenha os números selecionados da URL
+    const idRifa = urlParams.get('id_rifa');
+
+    // Obtenha os números selecionados da URL
+    const numerosSelecionados = urlParams.get('numeros');
+
+    // Agora, 'numerosSelecionados' contém a lista de números selecionados separados por vírgula
+    console.log("Números selecionados na página de pagamento: " + numerosSelecionados);
+
+    // Obtenha o elemento de exibição dos números selecionados
+    const idRifaDisplay = document.getElementById('id-rifa-display');
+
+    // Obtenha o elemento de exibição dos números selecionados
+    const numerosSelecionadosDisplay = document.getElementById('numeros-selecionados-display');
+
+    // Exiba o id, números selecionados na página
+    idRifaDisplay.textContent = "ID Rifa: " + idRifa;
+    numerosSelecionadosDisplay.textContent = "Números Selecionados: " + numerosSelecionados;
+
+</script>
+
+<script>
+    // Obtém os parâmetros da URL atual
+const urlParams = new URLSearchParams(window.location.search);
+
+// Obtém o valor de 'id_rifa' e 'numeros' da URL atual
+const idRifa = urlParams.get('id_rifa');
+const numeros = urlParams.get('numeros');
+
+// Atualize os campos ocultos do formulário com os valores obtidos da URL
+    document.getElementById('id_rifa').value = idRifa;
+    document.getElementById('numeros').value = numeros;
+</script>
+
+<script>
+    // Obtenha uma referência ao formulário
+const form = document.getElementById('form-checkout');
+
+// Ouvinte de eventos para o evento 'submit' do formulário
+form.addEventListener('submit', function (event) {
+    // Obtenha os valores de id_rifa e numeros dos campos ocultos
+    const idRifa = document.getElementById('id_rifa').value;
+    const numeros = document.getElementById('numeros').value;
+
+    // Verifique se os valores são definidos
+    if (!idRifa || !numeros) {
+        // Impedir o envio do formulário se os valores estiverem em falta
+        event.preventDefault();
+        alert('Por favor, forneça os valores de id_rifa e numeros.');
+    }
+});
+
+</script>
+
+
+<!-- ... Seu código HTML posterior ... -->
 </body>
 </html>
+

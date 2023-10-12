@@ -1,5 +1,6 @@
 package br.mic.financiamento_coletivo.controller;
 
+import br.mic.financiamento_coletivo.model.Jogo;
 import com.mercadopago.MercadoPagoConfig;
 import com.mercadopago.client.common.IdentificationRequest;
 import com.mercadopago.client.payment.PaymentClient;
@@ -13,6 +14,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import java.math.BigDecimal;
 import java.time.OffsetDateTime;
@@ -27,7 +29,7 @@ public class PagamentoRifaController {
     }
 
     @PostMapping("/process_payment")
-    public String process_payment(Model model, HttpServletRequest request) {
+    public String process_payment(Model model, HttpServletRequest request, @RequestParam("id_rifa") String idRifa, @RequestParam("numeros") String numeros) {
         try {
             // Configure a chave de acesso do MercadoPago (substitua pela sua chave real)
             MercadoPagoConfig.setAccessToken("APP_USR-5579030860678637-101022-182436c107f980c52a171e0f27fd930c-202843783");
@@ -68,6 +70,8 @@ public class PagamentoRifaController {
 
             System.out.println(pixUrl);
 
+            //Jogo jogo = new Jogo(pegar o id da rifa, numero_selecionado, nome,sobrenome,email,telefone);
+            System.out.println("Pelape" + idRifa);
 
         } catch (MPApiException ex) {
             System.out.printf(

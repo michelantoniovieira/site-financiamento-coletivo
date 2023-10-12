@@ -289,11 +289,45 @@
 
     pagarButton.addEventListener("click", function () {
     console.log("Clique no botão Pagar foi acionado.");
-    // Redirecione o usuário para a página de pagamentoRifa (substitua com o URL correto)
-        window.location.href = "pagamentoRifa";
+    capturarNumerosSelecionados();
 });
 
 </script>
+
+<script>
+
+    // Função para capturar números selecionados
+    function capturarNumerosSelecionados() {
+        const numerosSelecionados = [];
+
+        // Selecione todas as células com a classe "selected"
+        const numerosSelecionadosElements = document.querySelectorAll(".numero-selecionavel.selected");
+
+        // Iterar através dos elementos selecionados e obter seus valores
+        numerosSelecionadosElements.forEach(function (element) {
+            numerosSelecionados.push(element.textContent);
+        });
+
+        // Agora, 'numerosSelecionados' contém os números escolhidos pelo usuário
+        // Você pode armazená-los temporariamente em uma variável ou enviá-los para o servidor via AJAX quando o usuário clicar em "Pagar".
+        console.log("Números selecionados:", numerosSelecionados);
+
+        // Verifique se há um parâmetro 'id_rifa' na URL
+        const urlParams = new URLSearchParams(window.location.search);
+        const idRifa = urlParams.get("id_rifa");
+
+        // Crie a URL da próxima página e inclua os números selecionados como parâmetros
+        const numerosSelecionadosParam = numerosSelecionados.join(",");
+
+        // Crie a URL da próxima página e inclua tanto o ID da rifa quanto os números selecionados como parâmetros
+        const nextPageURL = "pagamentoRifa?id_rifa=" + idRifa + "&numeros=" + numerosSelecionadosParam;
+
+
+        // Redirecione o usuário para a próxima página
+        window.location.href = nextPageURL;
+    }
+</script>
+
 
 <h1 class="centered-title">💳💰 Formas de pagamentos</h1>
 <div class="pix-rectangle">
