@@ -140,6 +140,7 @@
 
 </script>
 
+
 <script>
     // Obtém os parâmetros da URL atual
 const urlParams = new URLSearchParams(window.location.search);
@@ -149,26 +150,23 @@ const idRifa = urlParams.get('id_rifa');
 const numeros = urlParams.get('numeros');
 
 // Atualize os campos ocultos do formulário com os valores obtidos da URL
-    document.getElementById('id_rifa').value = idRifa;
-    document.getElementById('numeros').value = numeros;
-</script>
-
-<script>
-    // Obtenha uma referência ao formulário
+document.getElementById('id_rifa').value = idRifa;
+document.getElementById('numeros').value = numeros;
+// Obtenha uma referência ao formulário
 const form = document.getElementById('form-checkout');
 
 // Ouvinte de eventos para o evento 'submit' do formulário
 form.addEventListener('submit', function (event) {
-    // Obtenha os valores de id_rifa e numeros dos campos ocultos
-    const idRifa = document.getElementById('id_rifa').value;
-    const numeros = document.getElementById('numeros').value;
+// Obtenha os valores de id_rifa e numeros dos campos ocultos
+const idRifa = document.getElementById('id_rifa').value;
+const numeros = document.getElementById('numeros').value;
 
-    // Verifique se os valores são definidos
-    if (!idRifa || !numeros) {
-        // Impedir o envio do formulário se os valores estiverem em falta
-        event.preventDefault();
-        alert('Por favor, forneça os valores de id_rifa e numeros.');
-    }
+// Verifique se os valores são definidos
+if (!idRifa || !numeros) {
+    // Impedir o envio do formulário se os valores estiverem em falta
+    event.preventDefault();
+    alert('Por favor, forneça os valores de id_rifa e numeros.');
+}
 });
 
 </script>

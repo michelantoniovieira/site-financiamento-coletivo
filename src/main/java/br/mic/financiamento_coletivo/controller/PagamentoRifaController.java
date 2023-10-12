@@ -46,7 +46,7 @@ public class PagamentoRifaController {
                     .transactionAmount(new BigDecimal("100"))
                     .description("Título do produto")
                     .paymentMethodId("pix")
-                    .dateOfExpiration(OffsetDateTime.of(2023, 10, 12, 10, 10, 10, 0, ZoneOffset.UTC))
+                    .dateOfExpiration(OffsetDateTime.of(2023, 10, 13, 10, 10, 10, 0, ZoneOffset.UTC))
                     .payer(
                             PaymentPayerRequest.builder()
                                     .email(email)
