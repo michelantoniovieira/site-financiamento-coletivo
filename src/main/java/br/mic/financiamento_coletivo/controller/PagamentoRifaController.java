@@ -1,6 +1,7 @@
 package br.mic.financiamento_coletivo.controller;
 
 import br.mic.financiamento_coletivo.model.Jogo;
+import br.mic.financiamento_coletivo.repository.JogoRepository;
 import com.mercadopago.MercadoPagoConfig;
 import com.mercadopago.client.common.IdentificationRequest;
 import com.mercadopago.client.payment.PaymentClient;
@@ -10,6 +11,7 @@ import com.mercadopago.exceptions.MPApiException;
 import com.mercadopago.exceptions.MPException;
 import com.mercadopago.resources.payment.Payment;
 import jakarta.servlet.http.HttpServletRequest;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -22,7 +24,12 @@ import java.time.ZoneOffset;
 
 @Controller
 public class PagamentoRifaController {
+    private final JogoRepository jogoRepository;
 
+    @Autowired
+    public PagamentoRifaController(JogoRepository jogoRepository) {
+        this.jogoRepository = jogoRepository;
+    }
     @GetMapping("/pagamentoRifa")
     public String paginaPagamentoRifa() {
         return "pagamentoRifa";
@@ -30,8 +37,7 @@ public class PagamentoRifaController {
 
     @PostMapping("/process_payment")
     public String process_payment(Model model, HttpServletRequest request, @RequestParam("id_rifa") String idRifa, @RequestParam("numeros") String numeros) {
-        System.out.println("numeros" + numeros);
-        System.out.println("id rifapepela" + idRifa);
+
         try {
             // Configure a chave de acesso do MercadoPago (substitua pela sua chave real)
             MercadoPagoConfig.setAccessToken("APP_USR-5579030860678637-101022-182436c107f980c52a171e0f27fd930c-202843783");
@@ -42,6 +48,19 @@ public class PagamentoRifaController {
             String payerFirstName = request.getParameter("payerFirstName");
             String payerLastName = request.getParameter("payerLastName");
             String email = request.getParameter("email");
+            String telefone = request.getParameter("telefone");
+
+            System.out.println("numeros" + numeros);
+            System.out.println("id rifapepela" + idRifa);
+            System.out.println("nome" + payerFirstName);
+            System.out.println("telefone" + telefone);
+
+            String[] numerosArray = numeros.split(",");
+
+            for (String numero : numerosArray) {
+                Jogo jogo = new Jogo(Integer.parseInt(idRifa), numero, payerFirstName, payerLastName, email, telefone);
+                jogoRepository.save(jogo);
+            }
 
             // Crie a solicitação de pagamento usando os dados do formulário
             PaymentCreateRequest paymentCreateRequest = PaymentCreateRequest.builder()
@@ -72,9 +91,6 @@ public class PagamentoRifaController {
             model.addAttribute("qrCodeBase64", qrCodeBase64);
 
             System.out.println(pixUrl);
-
-            //Jogo jogo = new Jogo(pegar o id da rifa, numero_selecionado, nome,sobrenome,email,telefone);
-
 
         } catch (MPApiException ex) {
             System.out.printf(

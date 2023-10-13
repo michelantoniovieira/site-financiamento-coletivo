@@ -1,12 +1,9 @@
 package br.mic.financiamento_coletivo.model;
 
-import jakarta.persistence.Column;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
+import jakarta.persistence.*;
 
 import java.math.BigDecimal;
-
+@Entity
 public class Jogo
 {
     @Id
@@ -15,7 +12,7 @@ public class Jogo
     @Column(name="fk_id_rifa")
     private int fk_id_rifa;
     @Column(name="numero_escolhido")
-    private int numero_escolhido;
+    private String numero_escolhido;
     @Column(name="nome_participante")
     private String nome_participante;
     @Column(name="sobrenome")
@@ -25,7 +22,7 @@ public class Jogo
     @Column(name="telefone")
     private String telefone;
 
-    public Jogo(int fk_id_rifa, int numero_escolhido, String nome_participante, String sobrenome, String email, String telefone)
+    public Jogo(int fk_id_rifa, String numero_escolhido, String nome_participante, String sobrenome, String email, String telefone)
     {
         this.fk_id_rifa = fk_id_rifa;
         this.numero_escolhido = numero_escolhido;
@@ -55,12 +52,12 @@ public class Jogo
         this.fk_id_rifa = fk_id_rifa;
     }
 
-    public int getNumero_escolhido()
+    public String getNumero_escolhido()
     {
         return numero_escolhido;
     }
 
-    public void setNumero_escolhido(int numero_escolhido)
+    public void setNumero_escolhido(String numero_escolhido)
     {
         this.numero_escolhido = numero_escolhido;
     }
