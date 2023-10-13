@@ -151,6 +151,9 @@
 <br>
 <br>
 
+<h1 class="centered-title">Números Selecionados</h1>
+
+
 <div class="description-column" style="text-align: justify;">
     <p><b>📕Regulamento / Descrição</b></p>
     <hr>
@@ -171,42 +174,59 @@
     <button id="pagar-button" class="pagar-button">Pagar</button>
 </div>
 
+<ul id="numeros-selecionados-list">
+    <li th:each="numero : ${numerosSelecionados}" th:text="${numero}"></li>
+</ul>
+
 <script>
     // JavaScript em rifa.html
     document.addEventListener("DOMContentLoaded", function () {
-        const rifaSelect = document.getElementById("rifasSelect");
-        const quantidadeNumerosRifaElement = document.getElementById("quantidadeNumerosRifa");
-        const quantidadeNumerosRifa = parseInt(quantidadeNumerosRifaElement.textContent);
+    const rifaSelect = document.getElementById("rifasSelect");
+    const quantidadeNumerosRifaElement = document.getElementById("quantidadeNumerosRifa");
+    const quantidadeNumerosRifa = parseInt(quantidadeNumerosRifaElement.textContent);
 
-        // Função para criar e preencher a matriz de números
-        function createNumberMatrix() {
-            const numeroMatrix = document.getElementById('numero-matrix');
-            let numero = 1;
-            const maxColunas = 15; // Número máximo de colunas por linha
+   // Função para criar e preencher a matriz de números
+    function createNumberMatrix() {
+    const numeroMatrix = document.getElementById('numero-matrix');
+    let numero = 1;
+    const maxColunas = 15; // Número máximo de colunas por linha
+    const numerosSelecionadosList = document.getElementById("numeros-selecionados-list");
+    const numerosSelecionadosItems = numerosSelecionadosList.getElementsByTagName("li");
 
-            for (let row = 0; row < Math.ceil(quantidadeNumerosRifa / maxColunas); row++) {
-                const newRow = document.createElement('tr');
+    const numerosSelecionados = [];
+    for (let i = 0; i < numerosSelecionadosItems.length; i++) {
+        const numeroSelecionado = parseInt(numerosSelecionadosItems[i].textContent);
+        numerosSelecionados.push(numeroSelecionado);
+    }
 
-                for (let col = 0; col < maxColunas && numero <= quantidadeNumerosRifa; col++) {
-                    const newCell = document.createElement('td');
-                    newCell.textContent = numero;
-                    newCell.classList.add("numero-selecionavel"); // Adicione a classe "numero-selecionavel" aos números
+    for (let row = 0; row < Math.ceil(quantidadeNumerosRifa / maxColunas); row++) {
+        const newRow = document.createElement('tr');
 
-                    // Adicione um ouvinte de evento de clique a cada célula
-                    newCell.addEventListener("click", function () {
-                        // Toggle da classe "selected" para manter o número laranja após o clique
-                        newCell.clasgi sList.toggle("selected");
+        for (let col = 0; col < maxColunas && numero <= quantidadeNumerosRifa; col++) {
+            const newCell = document.createElement('td');
+            newCell.textContent = numero;
+            newCell.classList.add("numero-selecionavel"); // Adicione a classe "numero-selecionavel" aos números
 
-                        // Chame a função para atualizar o preço
-                        updatePriceDisplay();
-                    });
-                    newRow.appendChild(newCell);
-                    numero++;
-                }
-
-                numeroMatrix.appendChild(newRow);
+            // Verifique se o número atual está na lista de números selecionados
+            if (numerosSelecionados.includes(numero)) {
+                newCell.classList.add("selected"); // Adicione a classe "selected" para destacar o número
             }
+
+            // Adicione um ouvinte de evento de clique a cada célula
+            newCell.addEventListener("click", function () {
+                // Toggle da classe "selected" para manter o número laranja após o clique
+                newCell.classList.toggle("selected");
+
+                // Chame a função para atualizar o preço
+                updatePriceDisplay();
+            });
+            newRow.appendChild(newCell);
+            numero++;
         }
+
+        numeroMatrix.appendChild(newRow);
+    }
+}
 
         // Chame a função para gerar a matriz de números quando a página for carregada
         createNumberMatrix();

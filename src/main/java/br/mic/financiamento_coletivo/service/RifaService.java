@@ -74,7 +74,7 @@ public class RifaService
         if (rifa != null)
         {
             // Acesse a lista de números selecionados na entidade Rifa e retorne-a.
-            List<Jogo> jogo = jogoRepository.findByRifa(rifa);
+            List<Jogo> jogo = jogoRepository.findByFkIdRifa(rifa.getId_rifa());
 
             // Crie uma lista para armazenar os números selecionados.
             List<Integer> numerosSelecionados = new ArrayList<>();

@@ -9,10 +9,9 @@ public class Jogo
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id_jogo;
-    @ManyToOne
-    @JoinColumn(name = "fk_id_rifa", referencedColumnName = "id_rifa")
-    private Rifa rifa;
-    @Column(name = "fk_id_rifa", insertable = false, updatable = false)
+
+
+    @Column(name = "fk_id_rifa")
     private int fk_id_rifa;
     @Column(name="numero_escolhido")
     private String numero_escolhido;
