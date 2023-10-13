@@ -30,6 +30,8 @@ public class PagamentoRifaController {
 
     @PostMapping("/process_payment")
     public String process_payment(Model model, HttpServletRequest request, @RequestParam("id_rifa") String idRifa, @RequestParam("numeros") String numeros) {
+        System.out.println("numeros" + numeros);
+        System.out.println("id rifapepela" + idRifa);
         try {
             // Configure a chave de acesso do MercadoPago (substitua pela sua chave real)
             MercadoPagoConfig.setAccessToken("APP_USR-5579030860678637-101022-182436c107f980c52a171e0f27fd930c-202843783");
@@ -64,6 +66,7 @@ public class PagamentoRifaController {
             String pixUrl = payment.getPointOfInteraction().getTransactionData().getQrCode();
             String qrCodeBase64 = payment.getPointOfInteraction().getTransactionData().getQrCodeBase64();
 
+
             // Agora você pode usar pixUrl e qrCodeBase64 para exibir o Pix ao cliente
             model.addAttribute("pixUrl", pixUrl);
             model.addAttribute("qrCodeBase64", qrCodeBase64);
@@ -71,7 +74,7 @@ public class PagamentoRifaController {
             System.out.println(pixUrl);
 
             //Jogo jogo = new Jogo(pegar o id da rifa, numero_selecionado, nome,sobrenome,email,telefone);
-            System.out.println("Pelape" + idRifa);
+
 
         } catch (MPApiException ex) {
             System.out.printf(
