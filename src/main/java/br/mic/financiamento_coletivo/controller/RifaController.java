@@ -1,12 +1,13 @@
 package br.mic.financiamento_coletivo.controller;
 
+import br.mic.financiamento_coletivo.model.Jogo;
 import br.mic.financiamento_coletivo.model.Rifa;
+import br.mic.financiamento_coletivo.repository.JogoRepository;
 import br.mic.financiamento_coletivo.service.RifaService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -16,30 +17,43 @@ public class RifaController
 
     @Autowired
     private RifaService rifaService; // Suponha que você tenha um serviço para as rifas
+    @Autowired
+    private JogoRepository jogoRepository; // Injete o JogoRepository para acessar os jogos
 
     @GetMapping("/rifa")
-    public String paginaRifa(@RequestParam(name = "id_rifa", required = false) Integer id_rifa, Model model) {
-        List<String> codigosRifa = rifaService.obterCodigosRifa(); // Obtém os códigos das rifas do serviço
+    public String paginaRifa(@RequestParam(name = "id_rifa", required = false) Integer id_rifa, Model model)
+    {
+        List<String> codigosRifa = rifaService.obterCodigosRifa();
         model.addAttribute("codigosRifa", codigosRifa);
 
-        if (id_rifa != null) {
+        if (id_rifa != null)
+        {
             Rifa rifa = rifaService.obterRifaPorId(id_rifa);
             model.addAttribute("rifa", rifa);
 
-            // Obtenha os números já selecionados para esta rifa a partir do seu serviço
             List<Integer> numerosSelecionados = rifaService.obterNumerosSelecionados(id_rifa);
-
-            // Adicione esses números ao modelo
             model.addAttribute("numerosSelecionados", numerosSelecionados);
-        } else {
-            // Adicione um objeto vazio Rifa ao modelo
-            model.addAttribute("rifa", new Rifa()); // Substitua 'Rifa' pelo nome da sua classe de rifa
+        } else
+        {
+            model.addAttribute("rifa", new Rifa());
         }
 
-        // Adicione o objeto 'selectedRifa' ao modelo, mesmo que seja apenas um objeto vazio
-        model.addAttribute("selectedRifa", new Rifa()); // Substitua 'Rifa' pelo nome da sua classe de rifa
+        model.addAttribute("selectedRifa", new Rifa());
 
         return "rifa";
     }
 
+
+    @RestController
+    @RequestMapping("/consultar-jogo")
+    public class ConsultarJogoController {
+        @Autowired
+        private JogoRepository jogoRepository;
+
+        @GetMapping
+        public List<Jogo> consultarNumerosPorTelefone(@RequestParam("telefone") String numeroTelefone) {
+            List<Jogo> jogos = jogoRepository.findByTelefone(numeroTelefone);
+            return jogos;
+        }
+    }
 }

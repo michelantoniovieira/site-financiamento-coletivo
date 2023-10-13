@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="pt-br" xmlns:th="http://www.thymeleaf.org">
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -86,10 +87,15 @@
         <div class="menu">
             <a href="index">Início</a>
         </div>
+        <form action="/rifa" method="post">
         <div class="search">
-            <input type="text" placeholder="Digite o número do celular">
-            <button class="text-xs font-medium sm:text-base flex-none border bg-white max-w-max border-Black-100 rounded-lg px-3 py-1"> 🔎 Buscar bilhetes </button>
+            <input type="text" name="telefone" id="telefone" placeholder="Digite o número do celular" value="">
+            <button id="filtrarNumerosTelefone">🔎 Buscar bilhetes </button>
         </div>
+        <div class="alert">
+            <p th:if="${alertMessage}">[[${alertMessage}]]</p>
+        </div>
+        </form>
     </nav>
 </header>
 <br>
@@ -177,6 +183,17 @@
 <ul id="numeros-selecionados-list" style="display: none;">
     <li th:each="numero : ${numerosSelecionados}" th:text="${numero}"> - Comprado</li>
 </ul>
+
+<script>
+    // Adicione um ouvinte de evento para o elemento select
+    document.getElementById('rifasSelect').addEventListener('change', function() {
+        // Obtém o valor selecionado
+        var selectedValue = this.value;
+
+        // Atribui o valor selecionado ao campo oculto
+        document.getElementById('fk_id_rifa').value = selectedValue;
+    });
+</script>
 
 <script>
     // JavaScript em rifa.html
@@ -343,6 +360,12 @@ function createNumberMatrix() {
         // Redirecione o usuário para a próxima página
         window.location.href = nextPageURL;
     }
+</script>
+
+<script>
+// Adicione um ouvinte de evento ao botão de busca
+const buscarBilhetesBtn = document.getElementById("buscarBilhetes");
+buscarBilhetesBtn.addEventListener("click", filtrarJogos);
 </script>
 
 

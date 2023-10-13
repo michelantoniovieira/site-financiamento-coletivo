@@ -14,5 +14,12 @@ public interface JogoRepository extends JpaRepository<Jogo, Long>
     // Adicione métodos personalizados de consulta, se necessário
     @Query("SELECT j FROM Jogo j WHERE j.fk_id_rifa = :fkIdRifa")
     List<Jogo> findByFkIdRifa(@Param("fkIdRifa") int fkIdRifa);
+
+    List<Jogo> findByTelefone(String numeroTelefone);
+
+    @Query("SELECT j FROM Jogo j WHERE j.fk_id_rifa = :fkIdRifa AND j.telefone = :telefone")
+    List<Jogo> findByRifaIdAndTelefone(@Param("fkIdRifa") String fkIdRifa, @Param("telefone") String telefone);
+
+
 }
 
