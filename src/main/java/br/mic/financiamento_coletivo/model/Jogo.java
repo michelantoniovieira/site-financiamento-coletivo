@@ -9,7 +9,10 @@ public class Jogo
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id_jogo;
-    @Column(name="fk_id_rifa")
+    @ManyToOne
+    @JoinColumn(name = "fk_id_rifa", referencedColumnName = "id_rifa")
+    private Rifa rifa;
+    @Column(name = "fk_id_rifa", insertable = false, updatable = false)
     private int fk_id_rifa;
     @Column(name="numero_escolhido")
     private String numero_escolhido;
@@ -21,6 +24,10 @@ public class Jogo
     private String email;
     @Column(name="telefone")
     private String telefone;
+
+    public Jogo() {
+        // Construtor padrão vazio
+    }
 
     public Jogo(int fk_id_rifa, String numero_escolhido, String nome_participante, String sobrenome, String email, String telefone)
     {

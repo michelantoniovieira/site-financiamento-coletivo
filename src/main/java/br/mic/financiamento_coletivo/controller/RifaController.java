@@ -25,6 +25,12 @@ public class RifaController
         if (id_rifa != null) {
             Rifa rifa = rifaService.obterRifaPorId(id_rifa);
             model.addAttribute("rifa", rifa);
+
+            // Obtenha os números já selecionados para esta rifa a partir do seu serviço
+            List<Integer> numerosSelecionados = rifaService.obterNumerosSelecionados(id_rifa);
+
+            // Adicione esses números ao modelo
+            model.addAttribute("numerosSelecionados", numerosSelecionados);
         } else {
             // Adicione um objeto vazio Rifa ao modelo
             model.addAttribute("rifa", new Rifa()); // Substitua 'Rifa' pelo nome da sua classe de rifa
