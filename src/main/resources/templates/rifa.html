@@ -174,8 +174,8 @@
     <button id="pagar-button" class="pagar-button">Pagar</button>
 </div>
 
-<ul id="numeros-selecionados-list">
-    <li th:each="numero : ${numerosSelecionados}" th:text="${numero}"></li>
+<ul id="numeros-selecionados-list" style="display: none;">
+    <li th:each="numero : ${numerosSelecionados}" th:text="${numero}"> - Comprado</li>
 </ul>
 
 <script>
@@ -186,7 +186,7 @@
     const quantidadeNumerosRifa = parseInt(quantidadeNumerosRifaElement.textContent);
 
    // Função para criar e preencher a matriz de números
-    function createNumberMatrix() {
+function createNumberMatrix() {
     const numeroMatrix = document.getElementById('numero-matrix');
     let numero = 1;
     const maxColunas = 15; // Número máximo de colunas por linha
@@ -203,24 +203,21 @@
         const newRow = document.createElement('tr');
 
         for (let col = 0; col < maxColunas && numero <= quantidadeNumerosRifa; col++) {
-            const newCell = document.createElement('td');
-            newCell.textContent = numero;
-            newCell.classList.add("numero-selecionavel"); // Adicione a classe "numero-selecionavel" aos números
+            // Verifique se o número atual já foi selecionado
+            if (!numerosSelecionados.includes(numero)) {
+                const newCell = document.createElement('td');
+                newCell.textContent = numero;
+                newCell.classList.add("numero-selecionavel"); // Adicione a classe "numero-selecionavel" aos números
 
-            // Verifique se o número atual está na lista de números selecionados
-            if (numerosSelecionados.includes(numero)) {
-                newCell.classList.add("selected"); // Adicione a classe "selected" para destacar o número
+                // Adicione um ouvinte de evento de clique a cada célula
+                newCell.addEventListener("click", function () {
+                    newCell.classList.toggle("selected"); // Toggle da classe "selected" para manter o número laranja após o clique
+
+                    // Chame a função para atualizar o preço
+                    updatePriceDisplay();
+                });
+                newRow.appendChild(newCell);
             }
-
-            // Adicione um ouvinte de evento de clique a cada célula
-            newCell.addEventListener("click", function () {
-                // Toggle da classe "selected" para manter o número laranja após o clique
-                newCell.classList.toggle("selected");
-
-                // Chame a função para atualizar o preço
-                updatePriceDisplay();
-            });
-            newRow.appendChild(newCell);
             numero++;
         }
 
