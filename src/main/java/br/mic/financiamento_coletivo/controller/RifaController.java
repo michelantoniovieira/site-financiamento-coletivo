@@ -43,7 +43,7 @@ public class RifaController
         return "rifa";
     }
 
-
+/*
     @RestController
     @RequestMapping("/consultar-jogo")
     public class ConsultarJogoController {
@@ -53,6 +53,20 @@ public class RifaController
         @GetMapping
         public List<Jogo> consultarNumerosPorTelefone(@RequestParam("telefone") String numeroTelefone) {
             List<Jogo> jogos = jogoRepository.findByTelefone(numeroTelefone);
+            return jogos;
+        }
+    }
+ */
+
+    @RestController
+    @RequestMapping("/consultar-jogo")
+    public class ConsultarJogoController {
+        @Autowired
+        private JogoRepository jogoRepository;
+
+        @GetMapping
+        public List<Jogo> consultarNumerosPorTelefone(@RequestParam("fk_id_rifa") int fk_id_rifa, @RequestParam("telefone") String numeroTelefone) {
+            List<Jogo> jogos = jogoRepository.findByRifaIdAndTelefone(fk_id_rifa, numeroTelefone);
             return jogos;
         }
     }
